@@ -9,6 +9,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import Roller from './components/Roller.vue';
 
 @Component({
+  name: 'app',
   components: {
     Roller,
   },
