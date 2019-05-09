@@ -1,58 +1,60 @@
 <template>
-    <div class="optionsContainer">
-        <div class="selectNotesContainer">
-            <div> Notes </div>
-            <ul>
-                <li v-for="note in notes.values()"> {{ note }}
-                    <input type="checkbox" :id="note" :value="note" v-model="selectedNotes">
-<!--                    <label :for="note" > {{ note }}</label>-->
-                </li>
-            </ul>
-        </div>
-        <div class="selectDirectionsContainer">
-            <div> Directions </div>
-            <ul>
-                <li v-for="direction in directions.values()"> {{ direction }}
-                    <input type="checkbox" :id="direction" :value="direction" v-model="selectedDirections">
-<!--                <label :for="direction"> {{ direction }}</label>-->
-                </li>
-            </ul>
-        </div>
-        <div class="clickOptionsContainer">
-
-        </div>
+  <div class="optionsContainer">
+    <div class="selectNotesContainer">
+      <div>Notes</div>
+      <ul>
+        <li v-for="note in notes" :key="note">
+          <input type="checkbox" :id="note" :value="note" v-model="selectedNotes">
+          <label :for="note" > {{ note }}</label>
+        </li>
+      </ul>
     </div>
+    <div class="selectDirectionsContainer">
+      <div>Directions</div>
+      <ul>
+        <li v-for="direction in directions" :key="direction">
+          <input
+            type="checkbox"
+            :id="direction"
+            :value="direction"
+            v-model="selectedDirections"
+          >
+          <label :for="direction"> {{ direction }}</label>
+        </li>
+      </ul>
+    </div>
+    <div class="clickOptionsContainer"></div>
+  </div>
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-  @Component
-  export default class OptionBar extends Vue {
+@Component
+export default class OptionBar extends Vue {
+  @Prop(Array) notes!: Array<string>;
+  @Prop(Array) directions!: Array<string>;
 
-    @Prop(Map) notes!: Map<number, string>;
-    @Prop(Map) directions!: Map<number, string>;
-
-    selectedNotes: string[] = new Array<string>();
-    selectedDirections: string[] = new Array<string>();
-
-  }
+  selectedNotes: string[] = new Array<string>();
+  selectedDirections: string[] = new Array<string>();
+}
 </script>
 
 <style lang="scss" scoped>
-    .optionsContainer {
-        height: 100px;
+.optionsContainer {
+  height: 100px;
 
-        & li {
-            display: inline-block;
-        }
-    }
+  & li {
+    display: inline-block;
+    padding-left: 0.8em;
+  }
+}
 
-    .selectNotesContainer {
-        height: 100px;
-    }
+.selectNotesContainer {
+  height: 100px;
+}
 
-    .selectDirectionsContainer {
-        height: 100px;
-    }
+.selectDirectionsContainer {
+  height: 100px;
+}
 </style>
