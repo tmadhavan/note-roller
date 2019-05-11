@@ -18,7 +18,7 @@
     </div>
     <div class="rollButtonContainer">
       <transition name="slide" mode="out-in">
-        <button class="rollbutton" @click="rollButtonClicked"> {{ rollButtonText }} </button>
+        <button class="rollButton" @click="rollButtonClicked"> {{ rollButtonText }} </button>
       </transition>
     </div>
 
@@ -54,6 +54,7 @@
                        @blur="checkWarnInput"
                        placeholder="Roll delay (default: 3s)"
                        v-model="delayWarnTime"> seconds </span>
+          <audio id="beeper" ref="beeper" src="beep.mp3"></audio>
         </div>
 
 
@@ -155,8 +156,7 @@ export default class Roller extends Vue {
     } else {
       if (this.delayWarn && this.remainingDelay - 1 == this.delayWarnTime) {
         console.log("Warning reached");
-        const audio = new Audio('beep.mp3');
-        audio.play();
+        (this.$refs.beeper as HTMLAudioElement).play();
       }
       this.remainingDelay--;
     }
