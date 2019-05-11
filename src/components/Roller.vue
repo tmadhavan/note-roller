@@ -101,8 +101,6 @@ export default class Roller extends Vue {
   delayWarn: boolean = false;
   delayWarnTime: number = this.DEFAULT_ROLL_DELAY_S;
 
-  beep = require('beepbeep');
-
   get rollButtonText(): string {
     if (this.currentlyAutoRolling) {
       return "Stop";
@@ -157,11 +155,13 @@ export default class Roller extends Vue {
     } else {
       if (this.delayWarn && this.remainingDelay - 1 == this.delayWarnTime) {
         console.log("Warning reached");
-        this.beep();
+        const audio = new Audio('beep.mp3');
+        audio.play();
       }
       this.remainingDelay--;
     }
   }
+
 
   private startAutoRolling(): void {
     this.currentlyAutoRolling = true;
@@ -197,7 +197,7 @@ export default class Roller extends Vue {
   }
 
   /**
-   * Ensure the waring sound time is less than the auto roll delay time
+   * Ensure the warning sound time is less than the auto roll delay time
    */
   private checkWarnInput(): void {
     if (this.delayWarnTime < 1) {
