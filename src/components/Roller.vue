@@ -1,56 +1,56 @@
 <template>
-  <div class="container">
+<v-container fill-height fluid>
 
-    <transition name="slide">
-    <div v-show="currentNote && currentDirection" class="outputContainer">
-      <transition name="fade" mode="out-in">
-      <div class="currentOutput" :key="currentNote"> {{ currentNote }} </div>
-      </transition>
-      <transition name="fade" mode="out-in">
-        <div class="currentOutput" :key="currentDirection"> {{ currentDirection }} </div>
-      </transition>
-    </div>
-    </transition>
-    <div>
-      <transition name="fade" mode="out-in">
-        <div class="currentlyRollingText" v-show="currentlyAutoRolling"> Re-rolling in {{ this.remainingDelay }}s </div>
-      </transition>
-    </div>
-    <div class="rollButtonContainer">
-      <transition name="slide" mode="out-in">
-        <button class="rollButton" @click="rollButtonClicked"> {{ rollButtonText }} </button>
-      </transition>
-    </div>
+  <v-layout column justify-center align-center>
 
-    <div class="optionsContainer">
-      <div class="notesOptions">
+    <v-flex xs8 sm8 md8 >
+
+  <v-layout column>
+    <v-flex  mb-5 align-self-center v-show="currentNote" transition="slide">
+      <div class="display-4" transition="fade" mode="out-in">
+        {{ currentNote }}    {{ currentDirection }}
+      </div>
+    </v-flex>
+
+
+    <v-flex xs1 sm1 md1 pa-2 v-show="currentlyAutoRolling">
+      Re-rolling in {{ this.remainingDelay }}s
+    </v-flex>
+    <v-flex pa-2 align-self-center>
+        <v-btn flat large @click="rollButtonClicked"> {{ rollButtonText }} </v-btn>
+    </v-flex>
+  </v-layout>
+
+
+  <v-layout column>
+
+    <v-flex align-self-center pa-5 class="notesOptions">
         <CheckOptions :options="notes" name="Notes" @optionChanged="selectedNotesChanged"></CheckOptions>
-      </div>
+      </v-flex>
 
-      <div class="directionsOptions">
+      <v-flex align-self-center pa-5 class="directionsOptions" nowrap>
         <CheckOptions :options="directions" name="Directions" @optionChanged="selectedDirectionsChanged"></CheckOptions>
-      </div>
+      </v-flex>
 
-      <div class="autoRollOptions">
-
-      <div class="delayOptions">
+      <v-layout row pa-3 align-self-center>
+      <v-flex pa-3>
         <div> Auto-roll </div>
         <div class="autoRollDelayInput">
           <input id="autoRollEnabled" type="checkbox" v-model="autoRoll" :value="autoRoll">
           <span><input type="number" :disabled="!autoRoll || (autoRoll && currentlyAutoRolling)"
-                       min="1" max="100" size="5"
+                       min="1" max="100" size="3"
                        @blur="checkDelayInput"
                        placeholder="Roll delay (default: 3s)"
                        v-model="autoRollDelay"> seconds </span>
         </div>
-      </div>
+      </v-flex>
 
-      <div class="delayWarnOptions" v-show="autoRoll">
+      <v-flex pa-3>
         <div> Warning beep </div>
         <div class="delayWarnInput">
           <input id="delayWarnEnabled" type="checkbox" v-model="delayWarn" :value="delayWarn">
           <span><input type="number" :disabled="!autoRoll || !delayWarn"
-                       min="1" max="100" size="5"
+                       min="1" max="100" size="3"
                        @blur="checkWarnInput"
                        placeholder="Roll delay (default: 3s)"
                        v-model="delayWarnTime"> seconds </span>
@@ -58,12 +58,12 @@
         </div>
 
 
-      </div>
-      </div>
-
-    </div>
-  </div>
-
+      </v-flex>
+    </v-layout>
+   </v-layout>
+    </v-flex>
+  </v-layout>
+</v-container>
 </template>
 
 
@@ -83,7 +83,7 @@ export default class Roller extends Vue {
   private readonly DEFAULT_ROLL_DELAY_S = 3;
 
   // Currently displayed note/direction
-  currentNote: string | null = null; 
+  currentNote: string = "𝄠";
   currentDirection: string | null = null; 
   
   // Notes that have been selected via checkboxes in OptionBar components 
@@ -222,113 +222,113 @@ export default class Roller extends Vue {
 
 <style lang="scss" scoped>
 
-.container {
-  min-width: 850px;
-  min-height: 500px;
-  padding: 2em;
-  margin: 0 auto;
-  height: 80vh;
-  width: 80vw;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: center;
+/*.container {*/
+/*  min-width: 850px;*/
+/*  min-height: 500px;*/
+/*  padding: 2em;*/
+/*  margin: 0 auto;*/
+/*  height: 80vh;*/
+/*  width: 80vw;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  flex-wrap: nowrap;*/
+/*  justify-content: center;*/
 
-}
+/*}*/
 
-.outputContainer {
-    height: 10em;
-    display: flex;
-    font-size: 2em;
-    justify-content: center;
-}
+/*.outputContainer {*/
+/*    height: 10em;*/
+/*    display: flex;*/
+/*    font-size: 2em;*/
+/*    justify-content: center;*/
+/*}*/
 
-.rollButtonContainer {
-    height: 3em;
-    font-size: 1.5em;
-    padding: 2em;
-    clear: both;
+/*.rollButtonContainer {*/
+/*    height: 3em;*/
+/*    font-size: 1.5em;*/
+/*    padding: 2em;*/
+/*    clear: both;*/
 
-    & .currentlyRollingText {
-      font-size: 0.8em;
-      margin-bottom: 30px;
-    }
+/*    & .currentlyRollingText {*/
+/*      font-size: 0.8em;*/
+/*      margin-bottom: 30px;*/
+/*    }*/
 
-    & button {
-      height: 2em;
-      border: none;
-      vertical-align: middle;
-      line-height: 0.9;
-      padding: 0.2em 0.5em;
-      text-align: center;
-      font-size: 2em;
-      background: darkgrey;
-      font-family: 'Bitter', serif;
-      color: white;
-      box-shadow: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-appearance: none;
+/*    & button {*/
+/*      height: 2em;*/
+/*      border: none;*/
+/*      vertical-align: middle;*/
+/*      line-height: 0.9;*/
+/*      padding: 0.2em 0.5em;*/
+/*      text-align: center;*/
+/*      font-size: 2em;*/
+/*      background: darkgrey;*/
+/*      font-family: 'Bitter', serif;*/
+/*      color: white;*/
+/*      box-shadow: none;*/
+/*      -webkit-font-smoothing: antialiased;*/
+/*      -moz-osx-font-smoothing: grayscale;*/
+/*      -webkit-appearance: none;*/
 
-      &:focus {
-        outline: none;
-      }
+/*      &:focus {*/
+/*        outline: none;*/
+/*      }*/
 
-      &:hover {
-        background: gray;
-        color: white;
-      }
-    }
-}
+/*      &:hover {*/
+/*        background: gray;*/
+/*        color: white;*/
+/*      }*/
+/*    }*/
+/*}*/
 
-.currentOutput {
-  padding: 0.5em;
-  font-size: 3em;
-  flex-basis: 10%;
-  line-height: 1.9;
-}
+/*.currentOutput {*/
+/*  padding: 0.5em;*/
+/*  font-size: 3em;*/
+/*  flex-basis: 10%;*/
+/*  line-height: 1.9;*/
+/*}*/
 
-.optionsContainer {
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  font-size: 0.9em;
-}
+/*.optionsContainer {*/
+/*  padding-top: 20px;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  font-size: 0.9em;*/
+/*}*/
 
-.notesOptions {
-  height: 50px;
-}
+/*.notesOptions {*/
+/*  height: 50px;*/
+/*}*/
 
-.autoRollOptions {
-  flex-basis: 50%;
-  display: flex;
-  flex-direction: row;
-  line-height: 1.9;
-  font-size: 0.8em;
-  text-align: left;
-  margin-left: 30%;
+/*.autoRollOptions {*/
+/*  flex-basis: 50%;*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  line-height: 1.9;*/
+/*  font-size: 0.8em;*/
+/*  text-align: left;*/
+/*  margin-left: 30%;*/
 
-  & label { 
-    text-align: left;
-  }
+/*  & label { */
+/*    text-align: left;*/
+/*  }*/
 
-  & .autoRollDelayInput {
-    font-size: 0.8em;
-  }
+/*  & .autoRollDelayInput {*/
+/*    font-size: 0.8em;*/
+/*  }*/
 
-  & .delayOptions {
-    padding: 0.4em;
+/*  & .delayOptions {*/
+/*    padding: 0.4em;*/
 
-  }
+/*  }*/
 
-  & .delayWarnOptions {
-    padding: 0.4em;
-  }
+/*  & .delayWarnOptions {*/
+/*    padding: 0.4em;*/
+/*  }*/
 
-  & .delayWarnInput {
-    font-size: 0.8em;
-  }
-}
+/*  & .delayWarnInput {*/
+/*    font-size: 0.8em;*/
+/*  }*/
+/*}*/
 
 
 /*.delayWarnOptions {*/

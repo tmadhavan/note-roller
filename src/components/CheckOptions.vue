@@ -29,11 +29,16 @@ export default class CheckOptions extends Vue {
 
 <style lang="scss" scoped>
 .optionsContainer {
-  height: 100px;
+ // height: 100px;
 
   & li {
     display: inline-block;
     padding-left: 0.8em;
+      line-height: 1.5em;
   }
+
+    & input {
+        vertical-align: middle;
+    }
 }
 </style>

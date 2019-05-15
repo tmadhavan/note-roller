@@ -1,29 +1,31 @@
 <template>
-  <div id="app">
-    <Roller/>
-  </div>
+  <v-app>
+    <v-content>
+      <Roller/>
+    </v-content>
+  </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Roller from './components/Roller.vue';
+  import { Component, Vue } from 'vue-property-decorator';
+  import Roller from './components/Roller.vue';
 
-@Component({
-  name: 'app',
-  components: {
-    Roller,
-  },
-})
-export default class App extends Vue {}
+  @Component({
+    name: 'app',
+    components: {
+      Roller,
+    },
+  })
+  export default class App extends Vue {}
 </script>
 
 <style>
-#app {
-  font-family: 'Bitter', serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: rgb(87, 85, 85);
-  margin-top: 30px;
-}
+  /*#app {*/
+  /*  font-family: 'Bitter', serif;*/
+  /*  -webkit-font-smoothing: antialiased;*/
+  /*  -moz-osx-font-smoothing: grayscale;*/
+  /*  text-align: center;*/
+  /*  color: rgb(87, 85, 85);*/
+  /*  margin-top: 30px;*/
+  /*}*/
 </style>

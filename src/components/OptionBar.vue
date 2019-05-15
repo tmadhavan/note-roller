@@ -12,6 +12,7 @@
     <div class="selectDirectionsContainer">
       <div>Directions</div>
       <ul>
+        <v-c
         <li v-for="direction in directions" :key="direction">
           <input
             type="checkbox"
@@ -30,6 +31,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+/**
+ * A component that displays and tracks the notes and directions that are selected by a user. The roller component
+ * only takes its displayed notes/directions from the set that the user has selected.
+ */
 @Component
 export default class OptionBar extends Vue {
   @Prop(Array) notes!: Array<string>;
